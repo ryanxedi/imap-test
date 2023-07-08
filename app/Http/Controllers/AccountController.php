@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Webklex\PHPIMAP\ClientManager;
+use Webklex\PHPIMAP\Client;
 
 class AccountController extends Controller
 {
@@ -30,9 +32,23 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'label' => 'required',
+            'incoming_server' => 'required',
+            'incoming_username' => 'required',
+            'incoming_password' => 'required',
+            'incoming_port' => 'required',
+            'incoming_security' => 'required',
+            'outgoing_server' => 'required',
+            'outgoing_username' => 'required',
+            'outgoing_password' => 'required',
+            'outgoing_port' => 'required',
+            'outgoing_security' => 'required',
+        ]);
+
         Account::create($request->all());
 
-        return redirect('/accounts');
+        return redirect('/accounts')->with('success', 'Created successfully');;
     }
 
     /**
@@ -58,7 +74,7 @@ class AccountController extends Controller
     {
         $account->update($request->all());
 
-        return redirect('/accounts');
+        return redirect('/accounts')->with('success', 'Updated successfully');;
     }
 
     /**
@@ -67,10 +83,40 @@ class AccountController extends Controller
     public function destroy(Account $account)
     {
         $account->delete();
+
+        return back()->with('success', 'Deleted successfully');
     }
 
     public function test(Account $account)
     {
-        dd($account);
+        $cm = new ClientManager($options = []);
+        $client = $cm->make([
+            'host'          => $account->incoming_server,
+            'port'          => $account->incoming_port,
+            'encryption'    => $account->incoming_security,
+            'validate_cert' => true,
+            'username'      => $account->incoming_username,
+            'password'      => $account->incoming_password,
+            'protocol'      => 'imap'
+        ]);
+
+        $client->connect();
+
+        $folders = $client->getFolders();
+
+        foreach($folders as $folder){
+            $email = [];
+            //Get all Messages of the current Mailbox $folder
+            /** @var \Webklex\PHPIMAP\Support\MessageCollection $messages */
+
+            $messages = $client->getFolderByPath('INBOX');
+
+            dd($messages);
+            /** @var \Webklex\PHPIMAP\Message $message */
+            foreach ($messages as $message) {
+                dd($message);
+                dd($message->getSubject(), $message->getHTMLBody());
+            }
+        }
     }
 }

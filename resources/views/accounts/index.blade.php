@@ -2,7 +2,18 @@
 	<div class="col-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Email Accounts</h6>
+            	<div class="row">
+            		<div class="col-6">
+                		<h6 class="m-0 font-weight-bold text-primary pt-2">Email Accounts</h6>
+                	</div>
+                	<div class="col-6 text-right">
+                		<a href="/accounts/create">
+			                <button class="btn btn-primary btn-sm">
+			                	Add new account
+			                </button>
+			            </a>
+			        </div>
+			    </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -42,11 +53,13 @@
 		                                		</a>
 	                                		</div>
 	                                		<div class="col-4">
-	                                			<a href="/accounts/{{ $account->id }}/test">
+	                                			<form action="/accounts/{{ $account->id }}" method="post">
+	                                				@csrf
+	                                				@method('delete')
 		                                			<button class="btn btn-link w-100">
 		                                				<i class="fa fa-times text-danger"></i>
 		                                			</button>
-		                                		</a>
+		                                		</form>
 	                                		</div>
 	                                	</div>
 	                                </td>

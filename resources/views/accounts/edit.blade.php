@@ -38,7 +38,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="incoming_password" value="{{ $account->incoming_password }}">
+				            		<input class="form-control" name="incoming_password" value="{{ $account->incoming_password }}" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -85,7 +85,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_password" value="{{ $account->outgoing_password }}">
+				            		<input class="form-control" name="outgoing_password" value="{{ $account->outgoing_password }}" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -103,8 +103,8 @@
 				            	<div class="col-md-6">
 				            		<select class="form-select" name="outgoing_security">
 				            			<option value="none" @if ($account->outgoing_security == 'none') selected @endif>None</option>
-				            			<option value="ssl" @if ($account->outgoing_security == 'none') selected @endif>SSL/TLS</option>
-				            			<option value="start_tls" @if ($account->outgoing_security == 'none') selected @endif>STARTTLS</option>
+				            			<option value="ssl" @if ($account->outgoing_security == 'ssl') selected @endif>SSL/TLS</option>
+				            			<option value="start_tls" @if ($account->outgoing_security == 'start_tls') selected @endif>STARTTLS</option>
 				            		</select>
 				            	</div>
 				            </div>

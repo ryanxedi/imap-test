@@ -37,7 +37,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="incoming_password">
+				            		<input class="form-control" name="incoming_password" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -68,7 +68,7 @@
 		            				IMAP Server 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_server" value="smtp.mail.us-east-1.awsapps.com">
+				            		<input class="form-control" name="outgoing_server" value="smtp.gmail.com">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -76,7 +76,7 @@
 		            				Username 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_username">
+				            		<input class="form-control" name="outgoing_username" value="accessremote835@gmail.com">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -84,7 +84,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_password">
+				            		<input class="form-control" name="outgoing_password" value="r3m0teacc3ss" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">

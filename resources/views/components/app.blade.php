@@ -81,6 +81,44 @@
                         </ul>
                     </nav>
                     <div class="container-fluid">
+                        @if (session()->has('success'))
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="alert alert-success" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        {{ session('success') }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if (session()->has('failure'))
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        {{ session('failure') }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        @foreach ($errors->all() as $error)
+                                            <div class="mb-2">{{ $error }}</div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         {{ $slot }}
                     </div>
                 </div>
