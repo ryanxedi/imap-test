@@ -160,39 +160,39 @@ class AccountController extends Controller
 
     public function checkEmail($account, $subject)
     {
-    $clientManager = new ClientManager($options = []);
-    $client = $clientManager->make([
-        'host'          => $account->incoming_server,
-        'port'          => $account->incoming_port,
-        'encryption'    => $account->incoming_security,
-        'validate_cert' => true,
-        'username'      => $account->incoming_username,
-        'password'      => $account->incoming_password,
-        'protocol'      => 'imap'
-    ]);
+        $clientManager = new ClientManager($options = []);
+        $client = $clientManager->make([
+            'host'          => $account->incoming_server,
+            'port'          => $account->incoming_port,
+            'encryption'    => $account->incoming_security,
+            'validate_cert' => true,
+            'username'      => $account->incoming_username,
+            'password'      => $account->incoming_password,
+            'protocol'      => 'imap'
+        ]);
 
-    $client->connect();
-    $inboxFolder = $client->getFolder('INBOX');
+        $client->connect();
+        $inboxFolder = $client->getFolder('INBOX');
 
-    // Retrieve all emails sorted by date in descending order
-    $emails = $inboxFolder->query()->orderByDesc('date')->get();
+        // Retrieve all emails sorted by date in descending order
+        $emails = $inboxFolder->query()->orderByDesc('date')->get();
 
-    // Retrieve the last 5 emails
-    $lastFiveEmails = $emails->take(5);
+        // Retrieve the last 5 emails
+        $lastFiveEmails = $emails->take(5);
 
-    foreach ($lastFiveEmails as $email) {
-        $messageSubject = $email->getSubject();
+        foreach ($lastFiveEmails as $email) {
+            $messageSubject = $email->getSubject();
 
-        if ($messageSubject === $subject) {
-            // Subject matches, do something
-            $htmlBody = $email->getHTMLBody();
-            // Process the HTML body or perform any desired actions
-            $client->disconnect();
-            return true;
+            if ($messageSubject === $subject) {
+                // Subject matches, do something
+                $htmlBody = $email->getHTMLBody();
+                // Process the HTML body or perform any desired actions
+                $client->disconnect();
+                return true;
+            }
         }
-    }
 
-    $client->disconnect();
-    return false;
+        $client->disconnect();
+        return false;
     }
 }
