@@ -39,11 +39,12 @@
 	                                <td>
 	                                	<div class="row">
 	                                		<div class="col-4">
-	                                			<a href="/accounts/{{ $account->id }}/test">
+	                                			<form action="/accounts/{{ $account->id }}/test" method="post">
+	                                				@csrf
 		                                			<button class="btn btn-primary w-100">
 		                                				<i class="fa fa-vial"></i> Test
 		                                			</button>
-		                                		</a>
+		                                		</form>
 	                                		</div>
 	                                		<div class="col-4">
 	                                			<a href="/accounts/{{ $account->id }}/edit">

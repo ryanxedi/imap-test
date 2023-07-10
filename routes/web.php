@@ -6,5 +6,5 @@ use App\Http\Controllers\TestController;
 
 Route::view('/', 'welcome');
 Route::resource('/accounts', AccountController::class);
-Route::get('/accounts/{account}/test', [AccountController::class, 'test']);
+Route::post('/accounts/{account}/test', [AccountController::class, 'test']);
 Route::resource('/tests', TestController::class);

@@ -88,7 +88,7 @@
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        {{ session('success') }}
+                                        <i class="fa fa-check mr-2"></i> {{ session('success') }}
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        {{ session('failure') }}
+                                        <i class="fa fa-times mr-2"></i> {{ session('failure') }}
                                     </div>
                                 </div>
                             </div>
