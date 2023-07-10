@@ -99,41 +99,15 @@ class AccountController extends Controller
 
 
         if ($send->statusText() == 'OK') {
+            // Check the inbox for that message
+            $check = $this->checkEmail($account, $subject);
+            dd($check);
             return back()->with('success', 'Message sent successfully');
         } else {
             return back()->with('failure', 'Message failed to send');
         }
 
-        // Check the inbox for that message
-        $cm = new ClientManager($options = []);
-        $client = $cm->make([
-            'host'          => $account->incoming_server,
-            'port'          => $account->incoming_port,
-            'encryption'    => $account->incoming_security,
-            'validate_cert' => true,
-            'username'      => $account->incoming_username,
-            'password'      => $account->incoming_password,
-            'protocol'      => 'imap'
-        ]);
 
-        $client->connect();
-
-        $folders = $client->getFolders();
-
-        foreach($folders as $folder){
-            $email = [];
-            //Get all Messages of the current Mailbox $folder
-            /** @var \Webklex\PHPIMAP\Support\MessageCollection $messages */
-
-            $messages = $client->getFolderByPath('INBOX');
-
-            dd($messages);
-            /** @var \Webklex\PHPIMAP\Message $message */
-            foreach ($messages as $message) {
-                dd($message);
-                dd($message->getSubject(), $message->getHTMLBody());
-            }
-        }
     }
 
     public function sendEmail($account, $subject)
@@ -182,5 +156,43 @@ class AccountController extends Controller
             // Email sending failed
             return response()->json(['message' => 'Failed to send email'], 500);
         }
+    }
+
+    public function checkEmail($account, $subject)
+    {
+    $clientManager = new ClientManager($options = []);
+    $client = $clientManager->make([
+        'host'          => $account->incoming_server,
+        'port'          => $account->incoming_port,
+        'encryption'    => $account->incoming_security,
+        'validate_cert' => true,
+        'username'      => $account->incoming_username,
+        'password'      => $account->incoming_password,
+        'protocol'      => 'imap'
+    ]);
+
+    $client->connect();
+    $inboxFolder = $client->getFolder('INBOX');
+
+    // Retrieve all emails sorted by date in descending order
+    $emails = $inboxFolder->query()->orderByDesc('date')->get();
+
+    // Retrieve the last 5 emails
+    $lastFiveEmails = $emails->take(5);
+
+    foreach ($lastFiveEmails as $email) {
+        $messageSubject = $email->getSubject();
+
+        if ($messageSubject === $subject) {
+            // Subject matches, do something
+            $htmlBody = $email->getHTMLBody();
+            // Process the HTML body or perform any desired actions
+            $client->disconnect();
+            return true;
+        }
+    }
+
+    $client->disconnect();
+    return false;
     }
 }
