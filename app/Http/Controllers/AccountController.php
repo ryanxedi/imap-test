@@ -93,21 +93,17 @@ class AccountController extends Controller
 
     public function test(Account $account)
     {
-        // Send an email with a unique subject line
         $subject = Str::uuid()->toString();
         $send = $this->sendEmail($account, $subject);
 
 
         if ($send->statusText() == 'OK') {
-            // Check the inbox for that message
             $check = $this->checkEmail($account, $subject);
             dd($check);
             return back()->with('success', 'Message sent successfully');
         } else {
             return back()->with('failure', 'Message failed to send');
         }
-
-
     }
 
     public function sendEmail($account, $subject)
@@ -160,6 +156,7 @@ class AccountController extends Controller
 
     public function checkEmail($account, $subject)
     {
+        // sleep(2);
         $clientManager = new ClientManager($options = []);
         $client = $clientManager->make([
             'host'          => $account->incoming_server,
@@ -174,19 +171,17 @@ class AccountController extends Controller
         $client->connect();
         $inboxFolder = $client->getFolder('INBOX');
 
-        // Retrieve all emails sorted by date in descending order
-        $emails = $inboxFolder->query()->orderByDesc('date')->get();
+        $messages = $inboxFolder->messages()->all();
 
-        // Retrieve the last 5 emails
-        $lastFiveEmails = $emails->take(5);
+        // $query = $messages->query()->text('cad745d7-0bfc-4841-a5af-7bdbbf80f669')->get();
 
-        foreach ($lastFiveEmails as $email) {
-            $messageSubject = $email->getSubject();
+        dd($messages);
+
+        foreach ($messages as $message) {
+            dd($subject, $message->getSubject());
+            $messageSubject = $message->getSubject()['values'];
 
             if ($messageSubject === $subject) {
-                // Subject matches, do something
-                $htmlBody = $email->getHTMLBody();
-                // Process the HTML body or perform any desired actions
                 $client->disconnect();
                 return true;
             }
