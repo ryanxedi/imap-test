@@ -39,16 +39,11 @@
 	                                <td>
 	                                	<div class="row">
 	                                		<div class="col-4">
-	                                			<form action="/accounts/{{ $account->id }}/test" method="post">
-	                                				@csrf
-		                                			<button class="btn btn-primary w-100">
-		                                				<i class="fa fa-vial"></i> Test
-		                                			</button>
-		                                		</form>
+	                                			<livewire:test-connection :account_id="$account->id">
 	                                		</div>
 	                                		<div class="col-4">
 	                                			<a href="/accounts/{{ $account->id }}/edit">
-		                                			<button class="btn btn-warning w-100">
+		                                			<button class="btn btn-warning">
 		                                				<i class="fa fa-edit"></i> Edit
 		                                			</button>
 		                                		</a>
@@ -57,7 +52,7 @@
 	                                			<form action="/accounts/{{ $account->id }}" method="post">
 	                                				@csrf
 	                                				@method('delete')
-		                                			<button class="btn btn-link w-100">
+		                                			<button class="btn btn-link">
 		                                				<i class="fa fa-times text-danger"></i>
 		                                			</button>
 		                                		</form>

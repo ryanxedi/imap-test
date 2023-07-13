@@ -11,6 +11,17 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
         <link href="/css/sb-admin-2.min.css" rel="stylesheet">
         <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+        <link rel="manifest" href="/favicons/site.webmanifest">
+        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="/favicons/favicon.ico">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        @livewireStyles
     </head>
     <body id="page-top">
         <div id="wrapper">
@@ -136,11 +147,7 @@
         <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="/js/sb-admin-2.min.js"></script>
-        <script src="/vendor/chart.js/Chart.min.js"></script>
-        <script src="/js/demo/chart-area-demo.js"></script>
-        <script src="/js/demo/chart-pie-demo.js"></script>
-        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script src="/js/demo/datatables-demo.js"></script>
+        @stack('scripts')
+        @livewireScripts
     </body>
 </html>
