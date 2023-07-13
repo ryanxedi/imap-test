@@ -99,8 +99,12 @@ class AccountController extends Controller
 
         if ($send->statusText() == 'OK') {
             $check = $this->checkEmail($account, $subject);
-            dd($check);
-            return back()->with('success', 'Message sent successfully');
+            
+            if ($check == true) {
+                return back()->with('success', 'Message sent successfully and confirmed delivery');
+            } else {
+                return back()->with('failure', 'Message sent but not confirmed');
+            }
         } else {
             return back()->with('failure', 'Message failed to send');
         }
@@ -156,7 +160,7 @@ class AccountController extends Controller
 
     public function checkEmail($account, $subject)
     {
-        // sleep(2);
+        sleep(3);
         $clientManager = new ClientManager($options = []);
         $client = $clientManager->make([
             'host'          => $account->incoming_server,
@@ -173,19 +177,13 @@ class AccountController extends Controller
 
         $messages = $inboxFolder->messages()->all();
 
-        // $query = $messages->query()->text('cad745d7-0bfc-4841-a5af-7bdbbf80f669')->get();
+        $search = $inboxFolder->search()->subject($subject)->get();
 
-        dd($messages);
-
-        foreach ($messages as $message) {
-            dd($subject, $message->getSubject());
-            $messageSubject = $message->getSubject()['values'];
-
-            if ($messageSubject === $subject) {
-                $client->disconnect();
-                return true;
-            }
+        if (count($search)) {
+            $client->disconnect();
+            return true;
         }
+
 
         $client->disconnect();
         return false;
