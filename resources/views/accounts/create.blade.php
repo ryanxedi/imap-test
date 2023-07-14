@@ -29,7 +29,7 @@
 		            				Username 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="{{ env('INCOMING_USERNAME') ?? '' }}">
+				            		<input class="form-control" name="incoming_username" value="{{ env('INCOMING_USERNAME') ?? '' }}">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -37,7 +37,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="{{ env('INCOMING_PASSWORD') ?? '' }}" type="password">
+				            		<input class="form-control" name="incoming_password" value="{{ env('INCOMING_PASSWORD') ?? '' }}" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -84,7 +84,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_password" value="" type="password">
+				            		<input class="form-control" name="outgoing_password" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
