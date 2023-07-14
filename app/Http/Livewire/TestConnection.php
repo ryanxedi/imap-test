@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
 use App\Models\Account;
+use Exception;
+use App\Mail\FailedTest;
 
 class TestConnection extends Component
 {
@@ -102,7 +104,12 @@ class TestConnection extends Component
             'protocol'      => 'imap'
         ]);
 
-        $client->connect();
+        try {
+            $client->connect();
+        } catch (Exception $e) {
+            session()->flash('failure', $e->getMessage());
+            return redirect()->to('/accounts');
+        }
 
         $search = $client->getFolder('INBOX')->search()->subject($subject)->get();
 

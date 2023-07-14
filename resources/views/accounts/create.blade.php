@@ -21,7 +21,7 @@
 		            				IMAP Server 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="incoming_server" value="imap.mail.us-east-1.awsapps.com">
+				            		<input class="form-control" name="incoming_server" value="imap.gmail.com">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -29,7 +29,7 @@
 		            				Username 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="incoming_username">
+				            		<input class="form-control" name="{{ env('INCOMING_USERNAME') ?? '' }}">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -37,7 +37,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="incoming_password" type="password">
+				            		<input class="form-control" name="{{ env('INCOMING_PASSWORD') ?? '' }}" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -68,7 +68,7 @@
 		            				IMAP Server 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_server" value="smtp.gmail.com">
+				            		<input class="form-control" name="outgoing_server" value="smtp.mail.us-east-1.awsapps.com">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -76,7 +76,7 @@
 		            				Username 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_username" value="{{ env('OUTGOING_USERNAME') ?? '' }}">
+				            		<input class="form-control" name="outgoing_username" value="">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -84,7 +84,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_password" value="{{ env('OUTGOING_PASSWORD') ?? '' }}" type="password">
+				            		<input class="form-control" name="outgoing_password" value="" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
