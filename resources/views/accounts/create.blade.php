@@ -76,7 +76,7 @@
 		            				Username 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_username" value="accessremote835@gmail.com">
+				            		<input class="form-control" name="outgoing_username" value="{{ env('OUTGOING_USERNAME') ?? '' }}">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
@@ -84,7 +84,7 @@
 		            				Password 
 		            			</div>
 				            	<div class="col-md-6">
-				            		<input class="form-control" name="outgoing_password" value="r3m0teacc3ss" type="password">
+				            		<input class="form-control" name="outgoing_password" value="{{ env('OUTGOING_PASSWORD') ?? '' }}" type="password">
 				            	</div>
 				            </div>
 		                	<div class="row mb-3">
