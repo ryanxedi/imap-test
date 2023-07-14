@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
+                    <div class="mx-4">
                         <div class="copyright text-center my-auto">
                             <span>&copy; {{ date('Y') }} {{ env('APP_NAME') }}</span>
                         </div>
