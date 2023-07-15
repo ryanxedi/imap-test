@@ -63,7 +63,7 @@ trait TestTrait {
 
     public function checkEmail($account, $subject)
     {
-        sleep(3);
+        sleep(5);
         $clientManager = new ClientManager($options = []);
         $client = $clientManager->make([
             'host'          => $account->incoming_server,
