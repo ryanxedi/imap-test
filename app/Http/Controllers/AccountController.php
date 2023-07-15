@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Traits\TestTrait;
+use Str;
 
 class AccountController extends Controller
 {
@@ -97,12 +98,41 @@ class AccountController extends Controller
             $check = $this->checkEmail($account, $subject);
             
             if ($check == true) {
-                return back()->with('success', 'Message sent successfully and confirmed delivery');
+                return back()->with('success', 'Message sent and confirmed delivery');
             } else {
                 return back()->with('failure', 'Message sent but not confirmed');
             }
         } else {
             return back()->with('failure', 'Message failed to send');
         }
+    }
+
+    public function testAll(Account $account)
+    {
+        $accounts = Account::all();
+        $passed = [];
+        $failed = [];
+
+        foreach ($accounts as $account) {
+            $subject = Str::uuid()->toString();
+            $send = $this->sendEmail($account, $subject);
+
+            if ($send->statusText() == 'OK') {
+                $check = $this->checkEmail($account, $subject);
+                
+                if ($check == true) {
+                    $message = $account->outgoing_username . ' - Message sent and confirmed delivery';
+                    $passed[] = $message;
+                } else {
+                    $message = $account->outgoing_username . ' - Message sent but not confirmed';
+                    $failed[] = $message;
+                }
+            } else {
+                $message = $account->outgoing_username . 'Message failed to send';
+                $failed[] = $message;
+            }
+        }
+
+        dd($passed, $failed);
     }
 }
