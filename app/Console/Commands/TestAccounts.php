@@ -43,7 +43,7 @@ class TestAccounts extends Command
                 $check = $this->checkEmail($account, $subject);
                 
                 if ($check == true) {
-                    $message = $account->outgoing_username . ' - Message sent successfully and confirmed delivery';
+                    $message = $account->outgoing_username . ' - Message sent and confirmed delivery';
                     
                     $passed[] = $message;
                     
