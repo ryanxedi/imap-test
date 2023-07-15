@@ -9,16 +9,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class FailedTest extends Mailable
+class DailyReport extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $passed;
+    public $failed;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($passed, $failed)
     {
-        //
+        $this->passed = $passed;
+        $this->failed = $failed;
     }
 
     /**
@@ -27,7 +31,7 @@ class FailedTest extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Failed Test',
+            subject: 'Daily Report',
         );
     }
 
@@ -37,7 +41,7 @@ class FailedTest extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.daily-report',
         );
     }
 

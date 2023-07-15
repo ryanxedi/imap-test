@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Traits;
 
-use Livewire\Component;
+use Illuminate\Http\Request;
 use Webklex\PHPIMAP\ClientManager;
 use Webklex\PHPIMAP\Client;
 use Illuminate\Support\Str;
@@ -10,37 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
 use App\Models\Account;
-use Exception;
-use App\Mail\FailedTest;
 
-class TestConnection extends Component
-{
-    public $account_id;
-    public $account;
-    public $subject;
-
-    public function test()
-    {
-        $account = Account::find($this->account_id);
-        $subject = Str::uuid()->toString();
-
-        $send = $this->sendEmail($account, $subject);
-
-        if ($send->statusText() == 'OK') {
-            $check = $this->checkEmail($account, $subject);
-            
-            if ($check == true) {
-                session()->flash('success', 'Message sent successfully and confirmed delivery');
-                return redirect()->to('/accounts');
-            } else {
-                session()->flash('failure', 'Message sent but not confirmed');
-                return redirect()->to('/accounts');
-            }
-        } else {
-            session()->flash('failure', 'Message failed to send');
-            return redirect()->to('/accounts');
-        }
-    }
+trait TestTrait {
 
     public function sendEmail($account, $subject)
     {
@@ -104,33 +75,21 @@ class TestConnection extends Component
             'protocol'      => 'imap'
         ]);
 
-        try {
-            $client->connect();
-        } catch (Exception $e) {
-            session()->flash('failure', $e->getMessage());
+        $client->connect();
+        $inboxFolder = $client->getFolder('INBOX');
 
-/*            Mail::send('emails.failed_email', $data, function ($message) use ($senderAddress, $senderName, $recipientAddress, $subject) {
-                $message->from($senderAddress, $senderName)
-                    ->to($recipientAddress)
-                    ->subject($subject);
-            });*/
+        $messages = $inboxFolder->messages()->all();
 
-            return redirect()->to('/accounts');
-        }
-
-        $search = $client->getFolder('INBOX')->search()->subject($subject)->get();
+        $search = $inboxFolder->search()->subject($subject)->get();
 
         if (count($search)) {
             $client->disconnect();
             return true;
         }
 
+
         $client->disconnect();
         return false;
     }
 
-    public function render()
-    {
-        return view('livewire.test-connection');
-    }
 }

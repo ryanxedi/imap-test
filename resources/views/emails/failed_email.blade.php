@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $subject }}</title>
+    <title>Failed email test</title>
 </head>
 <body>
-    <h1>This message is to test outgoing emails</h1>
-    <p>You can disregard this message</p>
+    <p>Account failure - {{ $account->outgoing_username }}</p>
+    <p>Reason: {{}}
 </body>
 </html>
