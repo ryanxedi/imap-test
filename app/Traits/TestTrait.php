@@ -78,15 +78,12 @@ trait TestTrait {
         $client->connect();
         $inboxFolder = $client->getFolder('INBOX');
 
-        $messages = $inboxFolder->messages()->all();
-
         $search = $inboxFolder->search()->subject($subject)->get();
 
         if (count($search)) {
             $client->disconnect();
             return true;
         }
-
 
         $client->disconnect();
         return false;

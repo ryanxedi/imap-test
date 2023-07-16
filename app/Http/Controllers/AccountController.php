@@ -88,25 +88,6 @@ class AccountController extends Controller
         return back()->with('success', 'Deleted successfully');
     }
 
-    public function test(Account $account)
-    {
-        $subject = Str::uuid()->toString();
-        $send = $this->sendEmail($account, $subject);
-
-
-        if ($send->statusText() == 'OK') {
-            $check = $this->checkEmail($account, $subject);
-            
-            if ($check == true) {
-                return back()->with('success', 'Message sent and confirmed delivery');
-            } else {
-                return back()->with('failure', 'Message sent but not confirmed');
-            }
-        } else {
-            return back()->with('failure', 'Message failed to send');
-        }
-    }
-
     public function testAll(Account $account)
     {
         $accounts = Account::all();
@@ -116,6 +97,8 @@ class AccountController extends Controller
         foreach ($accounts as $account) {
             $subject = Str::uuid()->toString();
             $send = $this->sendEmail($account, $subject);
+
+            dump($account, $subject, $send);
 
             if ($send->statusText() == 'OK') {
                 $check = $this->checkEmail($account, $subject);
@@ -132,7 +115,5 @@ class AccountController extends Controller
                 $failed[] = $message;
             }
         }
-
-        dd($passed, $failed);
     }
 }
